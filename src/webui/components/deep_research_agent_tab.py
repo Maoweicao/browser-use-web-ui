@@ -4,6 +4,7 @@ from functools import partial
 
 from src.webui.webui_manager import WebuiManager
 from src.utils import config
+from src.utils.i18n import t
 import logging
 import os
 from typing import Any, Dict, AsyncGenerator, Optional, Tuple, Union
@@ -382,27 +383,27 @@ def create_deep_research_agent_tab(webui_manager: WebuiManager):
 
     with gr.Group():
         with gr.Row():
-            mcp_json_file = gr.File(label="MCP server json", interactive=True, file_types=[".json"])
-            mcp_server_config = gr.Textbox(label="MCP server", lines=6, interactive=True, visible=False)
+            mcp_json_file = gr.File(label=t("mcp_server_json"), interactive=True, file_types=[".json"])
+            mcp_server_config = gr.Textbox(label=t("mcp_server"), lines=6, interactive=True, visible=False)
 
     with gr.Group():
-        research_task = gr.Textbox(label="Research Task", lines=5,
+        research_task = gr.Textbox(label=t("research_task"), lines=5,
                                    value="Give me a detailed travel plan to Switzerland from June 1st to 10th.",
                                    interactive=True)
         with gr.Row():
-            resume_task_id = gr.Textbox(label="Resume Task ID", value="",
+            resume_task_id = gr.Textbox(label=t("resume_task_id"), value="",
                                         interactive=True)
-            parallel_num = gr.Number(label="Parallel Agent Num", value=1,
+            parallel_num = gr.Number(label=t("parallel_num"), value=1,
                                      precision=0,
                                      interactive=True)
-            max_query = gr.Textbox(label="Research Save Dir", value="./tmp/deep_research",
+            max_query = gr.Textbox(label=t("max_query"), value="./tmp/deep_research",
                                    interactive=True)
     with gr.Row():
-        stop_button = gr.Button("⏹️ Stop", variant="stop", scale=2)
-        start_button = gr.Button("▶️ Run", variant="primary", scale=3)
+        stop_button = gr.Button(t("deep_research_stop"), variant="stop", scale=2)
+        start_button = gr.Button(t("deep_research_start"), variant="primary", scale=3)
     with gr.Group():
-        markdown_display = gr.Markdown(label="Research Report")
-        markdown_download = gr.File(label="Download Research Report", interactive=False)
+        markdown_display = gr.Markdown(label=t("markdown_display"))
+        markdown_download = gr.File(label=t("markdown_download"), interactive=False)
     tab_components.update(
         dict(
             research_task=research_task,

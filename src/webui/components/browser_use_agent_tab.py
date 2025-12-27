@@ -22,6 +22,7 @@ from src.agent.browser_use.browser_use_agent import BrowserUseAgent
 from src.browser.custom_browser import CustomBrowser
 from src.controller.custom_controller import CustomController
 from src.utils import llm_provider
+from src.utils.i18n import t
 from src.webui.webui_manager import WebuiManager
 
 logger = logging.getLogger(__name__)
@@ -952,14 +953,14 @@ async def handle_clear(webui_manager: WebuiManager):
             value="<div style='...'>Browser Cleared</div>"
         ),
         webui_manager.get_component_by_id("browser_use_agent.run_button"): gr.update(
-            value="▶️ Submit Task", interactive=True
+            value=t("submit_task"), interactive=True
         ),
         webui_manager.get_component_by_id("browser_use_agent.stop_button"): gr.update(
             interactive=False
         ),
         webui_manager.get_component_by_id(
             "browser_use_agent.pause_resume_button"
-        ): gr.update(value="⏸️ Pause", interactive=False),
+        ): gr.update(value=t("pause"), interactive=False),
         webui_manager.get_component_by_id("browser_use_agent.clear_button"): gr.update(
             interactive=True
         ),
@@ -981,41 +982,41 @@ def create_browser_use_agent_tab(webui_manager: WebuiManager):
         chatbot = gr.Chatbot(
             lambda: webui_manager.bu_chat_history,  # Load history dynamically
             elem_id="browser_use_chatbot",
-            label="Agent Interaction",
+            label=t("agent_interaction"),
             type="messages",
             height=600,
             show_copy_button=True,
         )
         user_input = gr.Textbox(
-            label="Your Task or Response",
-            placeholder="Enter your task here or provide assistance when asked.",
+            label=t("your_task_or_response"),
+            placeholder=t("your_task_placeholder"),
             lines=3,
             interactive=True,
             elem_id="user_input",
         )
         with gr.Row():
             stop_button = gr.Button(
-                "⏹️ Stop", interactive=False, variant="stop", scale=2
+                t("stop"), interactive=False, variant="stop", scale=2
             )
             pause_resume_button = gr.Button(
-                "⏸️ Pause", interactive=False, variant="secondary", scale=2, visible=True
+                t("pause"), interactive=False, variant="secondary", scale=2, visible=True
             )
             clear_button = gr.Button(
-                "🗑️ Clear", interactive=True, variant="secondary", scale=2
+                t("clear"), interactive=True, variant="secondary", scale=2
             )
-            run_button = gr.Button("▶️ Submit Task", variant="primary", scale=3)
+            run_button = gr.Button(t("submit_task"), variant="primary", scale=3)
 
         browser_view = gr.HTML(
             value="<div style='width:100%; height:50vh; display:flex; justify-content:center; align-items:center; border:1px solid #ccc; background-color:#f0f0f0;'><p>Browser View (Requires Headless=True)</p></div>",
-            label="Browser Live View",
+            label=t("browser_live_view"),
             elem_id="browser_view",
             visible=False,
         )
         with gr.Column():
-            gr.Markdown("### Task Outputs")
-            agent_history_file = gr.File(label="Agent History JSON", interactive=False)
+            gr.Markdown(f"### {t('task_outputs')}")
+            agent_history_file = gr.File(label=t("agent_history_json"), interactive=False)
             recording_gif = gr.Image(
-                label="Task Recording GIF",
+                label=t("task_recording_gif"),
                 format="gif",
                 interactive=False,
                 type="filepath",

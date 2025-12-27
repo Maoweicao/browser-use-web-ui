@@ -6,6 +6,7 @@ from src.webui.components.browser_settings_tab import create_browser_settings_ta
 from src.webui.components.browser_use_agent_tab import create_browser_use_agent_tab
 from src.webui.components.deep_research_agent_tab import create_deep_research_agent_tab
 from src.webui.components.load_save_config_tab import create_load_save_config_tab
+from src.utils.i18n import t
 
 theme_map = {
     "Default": gr.themes.Default(),
@@ -57,39 +58,39 @@ def create_ui(theme_name="Ocean"):
     ui_manager = WebuiManager()
 
     with gr.Blocks(
-            title="Browser Use WebUI", theme=theme_map[theme_name], css=css, js=js_func,
+            title=t("app_title"), theme=theme_map[theme_name], css=css, js=js_func,
     ) as demo:
         with gr.Row():
             gr.Markdown(
-                """
-                # 🌐 Browser Use WebUI
-                ### Control your browser with AI assistance
+                f"""
+                # 🌐 {t("app_title")}
+                ### {t("app_subtitle")}
                 """,
                 elem_classes=["header-text"],
             )
 
         with gr.Tabs() as tabs:
-            with gr.TabItem("⚙️ Agent Settings"):
+            with gr.TabItem(t("tab_agent_settings")):
                 create_agent_settings_tab(ui_manager)
 
-            with gr.TabItem("🌐 Browser Settings"):
+            with gr.TabItem(t("tab_browser_settings")):
                 create_browser_settings_tab(ui_manager)
 
-            with gr.TabItem("🤖 Run Agent"):
+            with gr.TabItem(t("tab_run_agent")):
                 create_browser_use_agent_tab(ui_manager)
 
-            with gr.TabItem("🎁 Agent Marketplace"):
+            with gr.TabItem(t("tab_agent_marketplace")):
                 gr.Markdown(
-                    """
-                    ### Agents built on Browser-Use
+                    f"""
+                    ### {t("marketplace_subtitle")}
                     """,
                     elem_classes=["tab-header-text"],
                 )
                 with gr.Tabs():
-                    with gr.TabItem("Deep Research"):
+                    with gr.TabItem(t("tab_deep_research")):
                         create_deep_research_agent_tab(ui_manager)
 
-            with gr.TabItem("📁 Load & Save Config"):
+            with gr.TabItem(t("tab_load_save_config")):
                 create_load_save_config_tab(ui_manager)
 
     return demo
